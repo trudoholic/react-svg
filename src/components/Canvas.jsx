@@ -8,6 +8,7 @@ import CurrentScore from './CurrentScore'
 import FlyingObject from './FlyingObject';
 import StartGame from './StartGame';
 import Title from './Title';
+import CannonBall from './CannonBall';
 
 const Canvas = (props) => {
     const gameHeight = 1200;
@@ -17,6 +18,7 @@ const Canvas = (props) => {
             id="aliens-go-home-canvas"
             preserveAspectRatio="xMaxYMax"
             onMouseMove={props.trackMouse}
+            onClick={props.shoot}
             viewBox={viewBox}
         >
             <defs>
@@ -26,6 +28,14 @@ const Canvas = (props) => {
             </defs>
             <Sky />
             <Ground />
+
+            {props.gameState.cannonBalls.map(cannonBall => (
+                <CannonBall
+                    key={cannonBall.id}
+                    position={cannonBall.position}
+                />
+            ))}
+
             <CannonPipe rotation={props.angle} />
             <CannonBase />
             <CurrentScore score={15} />
@@ -71,6 +81,7 @@ Canvas.propTypes = {
     }).isRequired,
     trackMouse: PropTypes.func.isRequired,
     startGame: PropTypes.func.isRequired,
+    shoot: PropTypes.func.isRequired,
 };
 
 export default Canvas;
